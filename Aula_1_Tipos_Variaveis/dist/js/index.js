@@ -14,7 +14,7 @@ let nomes = ["Maria", "João", "Ana"];
 // Tipo tuple para arrays com um número fixo de elementos e tipos definidos
 let pessoa = ["João", 25];
 // Tipo any para qualquer tipo de valor (evitar usar quando possível)
-let valorQualquer = 10;
+let valorQualquer = 32;
 valorQualquer = "abc";
 valorQualquer = true;
 // Tipo object para valores não primitivos
@@ -35,7 +35,7 @@ let numbers;
 // Annotation para objeto
 let person;
 // Inferência de tipo para variável
-let comprimento = 25; // TypeScript infere que idade é do tipo number
+let comprimento = 27; // TypeScript infere que idade é do tipo number
 // Inferência de tipo para arrays
 let sequencia = [1, 2, 3, 4, 5];
 // TypeScript infere que numeros é do tipo number[]

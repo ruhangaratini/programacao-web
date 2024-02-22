@@ -18,7 +18,7 @@ let nomes: string[] = ["Maria", "João", "Ana"];
 let pessoa: [string, number] = ["João", 25];
 
 // Tipo any para qualquer tipo de valor (evitar usar quando possível)
-let valorQualquer: any = 10;
+let valorQualquer: any = 32;
 valorQualquer = "abc";
 valorQualquer = true;
 
@@ -60,7 +60,7 @@ let person: { nome: string, idade: number };
 
 
 // Inferência de tipo para variável
-let comprimento = 25; // TypeScript infere que idade é do tipo number
+let comprimento = 27; // TypeScript infere que idade é do tipo number
 
 // Inferência de tipo para arrays
 let sequencia = [1, 2, 3, 4, 5];

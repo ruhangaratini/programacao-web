@@ -1,7 +1,7 @@
 /*
 
 Exercício:
-Considere um sistema de cadastro de usuários onde precisamos armazenar informações sobre os usuários. 
+Considere um sistema de cadastro de usuários onde precisamos armazenar informações sobre os usuários.
 Vamos criar variáveis e objetos para representar diferentes tipos de dados relacionados a um usuário.
 
 1- Crie as seguintes variáveis primitivas:
@@ -21,22 +21,11 @@ Vamos criar variáveis e objetos para representar diferentes tipos de dados rela
     Em seguida, imprima todas as variáveis e propriedades do objeto usuario usando console.log.
 
 */
-
-let nomeCompleto: string;
-let idade: number;
-let email: string;
-let isAtivo: boolean;
-
-let usuario: {
-    nome: string,
-    sobrenome: string,
-    idade: number,
-    contato: {
-        email: string,
-        telefone: string
-    }
-};
-
+var nomeCompleto;
+var idade;
+var email;
+var isAtivo;
+var usuario;
 usuario = {
     nome: "Ruhan",
     sobrenome: "Garatini",
@@ -46,26 +35,11 @@ usuario = {
         telefone: "123456789"
     }
 };
-
-type Contato = {
-    email: string,
-    telefone: string,
-}
-
-type Pessoa = {
-    nome: string,
-    sobrenome: string,
-    idade: number,
-    contato: Contato
-};
-
 console.log(usuario);
-
-
 /*
 
 Exercício:
-Vamos criar um sistema de gestão de produtos para uma loja online. 
+Vamos criar um sistema de gestão de produtos para uma loja online.
 Precisamos armazenar informações sobre diferentes produtos disponíveis na loja. Vamos criar variáveis e objetos para representar esses produtos.
 
 01 - Crie as seguintes variáveis primitivas:
@@ -84,19 +58,11 @@ Precisamos armazenar informações sobre diferentes produtos disponíveis na loj
     Em seguida, imprima todas as variáveis e propriedades do objeto produto usando console.log.
 
 */
-
-let produto: {
-    nome: string,
-    preco: number,
-    estoque: number,
-    categorias: string[]
-}
-
+var produto;
 produto = {
     nome: "Geladeira",
     preco: 1999.99,
     estoque: 6,
     categorias: ["Geladeira", "Brastemp", "2 Portas"]
-}
-
+};
 console.log(produto);

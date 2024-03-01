@@ -72,10 +72,13 @@ function sumEven() {
     return sum;
 }
 console.log(sumEven(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-// function factorial(num:number) : number {
-//     for(let i:number = num; i > num; i--)
-//         num *= i;
-//     return num;
-// }
-// console.log(factorial(3));
-// console.log(factorial(4));
+function factorial(num) {
+    if (num == 0)
+        return 1;
+    for (var i = num - 1; i > 0; i--)
+        num *= i;
+    return num;
+}
+console.log(factorial(3));
+console.log(factorial(5));
+console.log(factorial(0));

@@ -18,11 +18,17 @@ function weightedAvg() {
 }
 console.log(weightedAvg({ value: 10, weigth: 5 }, { value: 5, weigth: 5 }));
 function validateCpf(cpf) {
+    var cpfDigits = cpf.toString().split('');
     var aux = 0;
     for (var i = 0; i < 9; i++) {
-        aux += cpf[i] * (10 - i);
+        aux += parseInt(cpfDigits[i]) * (10 - i);
     }
-    console.log(aux);
-    return false;
+    var firstDigit = (aux * 10) % 11 == 10 ? 0 : (aux * 10) % 11;
+    aux = 0;
+    for (var i = 0; i < 10; i++) {
+        aux += parseInt(cpfDigits[i]) * (11 - i);
+    }
+    var secondDigit = (aux * 10) % 11 == 10 ? 0 : (aux * 10) % 11;
+    return firstDigit.toString() == cpfDigits[9] && secondDigit.toString() == cpfDigits[10];
 }
 console.log(validateCpf(52998224725));

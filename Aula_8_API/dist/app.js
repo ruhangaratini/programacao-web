@@ -13,6 +13,7 @@ function appLog() {
     console.log("A API se encontra disponível no URL: http://localhost:3000");
 }
 function createProduct(req, res) {
+    console.log(req);
     const newProduct = req.body;
     products.push(newProduct);
     res.status(201).json({ id: newProduct.id });
@@ -25,6 +26,14 @@ function getProduct(req, res) {
     }
     res.status(200).json(product);
 }
+function getAllProducts(req, res) {
+    console.log(req);
+    if (products.length == 0)
+        res.status(200).json({ message: "Nenhum produto cadastrado" });
+    else
+        res.status(200).json({ products });
+}
 app.post('/api/product', createProduct);
 app.get('/api/product/:id', getProduct);
+app.get('/api/products', getAllProducts);
 app.listen(PORT, appLog);

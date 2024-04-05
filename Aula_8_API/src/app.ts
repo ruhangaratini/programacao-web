@@ -27,7 +27,15 @@ function getProduct(req: Request, res: Response) {
     res.status(200).json(product);
 }
 
+function getAllProducts(req: Request, res: Response) {
+    if(products.length == 0)
+        res.status(200).json({message: "Nenhum produto cadastrado"});
+    else
+        res.status(200).json({products});
+}
+
 app.post('/api/product', createProduct);
 app.get('/api/product/:id', getProduct);
+app.get('/api/products', getAllProducts);
 
 app.listen(PORT, appLog);

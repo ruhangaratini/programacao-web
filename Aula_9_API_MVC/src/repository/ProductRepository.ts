@@ -15,7 +15,11 @@ export class ProductRepository{
         return this.productList.find(product => product.name === name);
     }
 
-    filtraTodosProdutos():Product[]{
+    filtraTodosProdutos(order:any):Product[]{
+        if(String(order) == 'asc')
+            return this.productList.sort((a, b) => a.price - b.price);
+        if(String(order) == 'desc')
+            return this.productList.sort((a, b) => b.price - a.price);
         return this.productList;
     }
 

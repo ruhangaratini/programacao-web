@@ -38,7 +38,7 @@ exports.pesquisarProdutoPorID = pesquisarProdutoPorID;
 ;
 function listaProdutos(req, res) {
     try {
-        res.status(200).json(productService.getProducts());
+        res.status(200).json(productService.getProducts(req.query.ordem));
     }
     catch (error) {
         res.status(400).json({ message: error.message });

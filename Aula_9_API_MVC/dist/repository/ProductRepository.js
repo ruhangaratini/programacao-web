@@ -14,7 +14,11 @@ class ProductRepository {
     filtrarProdutoPorNome(name) {
         return this.productList.find(product => product.name === name);
     }
-    filtraTodosProdutos() {
+    filtraTodosProdutos(order) {
+        if (String(order) == 'asc')
+            return this.productList.sort((a, b) => a.price - b.price);
+        if (String(order) == 'desc')
+            return this.productList.sort((a, b) => b.price - a.price);
         return this.productList;
     }
 }

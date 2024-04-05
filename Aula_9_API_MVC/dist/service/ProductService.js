@@ -28,8 +28,8 @@ class ProductService {
             return this.productRepository.filtrarProdutoPorNome(nomeProduto);
         }
     }
-    getProducts() {
-        return this.productRepository.filtraTodosProdutos();
+    getProducts(ordem) {
+        return this.productRepository.filtraTodosProdutos(ordem);
     }
 }
 exports.ProductService = ProductService;

@@ -27,7 +27,7 @@ export class ProductService{
     
     }
 
-    getProducts():Product[]{
-        return this.productRepository.filtraTodosProdutos();
+    getProducts(ordem: any):Product[]{
+        return this.productRepository.filtraTodosProdutos(ordem);
     }
 }

@@ -5,11 +5,11 @@ export class ProductService{
     productRepository: ProductRepository = new ProductRepository();
 
     cadastrarProduto(produtoData: any): Product {
-        const { name, description, price } = produtoData;
+        const { name, description, category, price } = produtoData;
         if(!name || !description || !price ){
             throw new Error("Informações incompletas");
         }
-        const novoProduto = new Product(name, description, price);
+        const novoProduto = new Product(name, description, category, price);
         this.productRepository.insereProduto(novoProduto);
         return novoProduto;
     }
@@ -20,7 +20,7 @@ export class ProductService{
         return this.productRepository.filtraProdutoPorId(idNumber);
     }
 
-    getProducts():Product[]{
-        return this.productRepository.filtraTodosProdutos();
+    getProducts(category:any):Product[]{
+        return this.productRepository.filtraTodosProdutos(category);
     }
 }

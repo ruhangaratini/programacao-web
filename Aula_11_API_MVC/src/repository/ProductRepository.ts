@@ -11,7 +11,10 @@ export class ProductRepository{
         return this.productList.find(product => product.id === id);
     }
 
-    filtraTodosProdutos():Product[]{
+    filtraTodosProdutos(category:string):Product[]{
+        if(category) {
+            return this.productList.filter((product) => product.category == category);
+        }
         return this.productList;
     }
 

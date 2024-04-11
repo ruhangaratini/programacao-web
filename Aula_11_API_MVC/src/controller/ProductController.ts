@@ -36,7 +36,7 @@ export function pesquisarProdutoPorID (req: Request, res: Response){
 
 export function listaProdutos (req: Request, res: Response){
     try {
-        res.status(200).json(productService.getProducts());
+        res.status(200).json(productService.getProducts(req.query.category));
     } catch (error: any) {
         res.status(400).json({ message: error.message});
     }

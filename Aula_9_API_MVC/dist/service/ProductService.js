@@ -12,6 +12,9 @@ class ProductService {
         if (!name || !description || !price) {
             throw new Error("Informações incompletas");
         }
+        if (this.productRepository.productList.find((product) => product.description == description)) {
+            throw new Error("Produto com mesma descrição já cadastrado");
+        }
         const novoProduto = new Product_1.Product(name, description, price);
         this.productRepository.insereProduto(novoProduto);
         return novoProduto;

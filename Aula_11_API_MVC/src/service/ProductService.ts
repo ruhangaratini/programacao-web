@@ -23,4 +23,29 @@ export class ProductService{
     getProducts(category:any):Product[]{
         return this.productRepository.filtraTodosProdutos(category);
     }
+
+    calculaEstatisticas():Object {
+        let qttProducts:number = 0;
+        let avgPrice:number = 0;
+        let maxPrice:number|undefined;
+        let minPrice:number|undefined;
+
+        for(const product of this.productRepository.productList) {
+            if(!maxPrice || product.price > maxPrice)
+                maxPrice = product.price;
+            if(!minPrice || product.price < minPrice)
+                minPrice = product.price;
+            qttProducts++;
+            avgPrice += product.price;
+        }
+
+        avgPrice = Math.round(avgPrice/qttProducts);
+
+        return {
+            qttProducts: qttProducts,
+            avgPrice: avgPrice,
+            maxPrice: maxPrice,
+            minPrice: minPrice
+        };
+    }
 }

@@ -41,3 +41,11 @@ export function listaProdutos (req: Request, res: Response){
         res.status(400).json({ message: error.message});
     }
 };
+
+export function estatisticaProdutos(req: Request, res: Response) {
+    try {
+        res.status(200).json(productService.calculaEstatisticas());
+    } catch(error: any) {
+        res.status(400).json({ message: error.message});
+    }
+}

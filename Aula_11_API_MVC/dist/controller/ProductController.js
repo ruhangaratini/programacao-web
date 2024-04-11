@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listaProdutos = exports.pesquisarProdutoPorID = exports.cadastrarProduto = void 0;
+exports.estatisticaProdutos = exports.listaProdutos = exports.pesquisarProdutoPorID = exports.cadastrarProduto = void 0;
 const ProductService_1 = require("../service/ProductService");
 const productService = new ProductService_1.ProductService();
 function cadastrarProduto(req, res) {
@@ -46,3 +46,12 @@ function listaProdutos(req, res) {
 }
 exports.listaProdutos = listaProdutos;
 ;
+function estatisticaProdutos(req, res) {
+    try {
+        res.status(200).json(productService.calculaEstatisticas());
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+exports.estatisticaProdutos = estatisticaProdutos;

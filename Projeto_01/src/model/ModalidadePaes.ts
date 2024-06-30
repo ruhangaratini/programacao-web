@@ -1,15 +1,19 @@
 export class ModalidadePaes {
-    ID:number;
+    private id:number;
     nome:string;
     vegano:boolean;
 
     constructor(nome:string, vegano:boolean) {
-        this.ID = this.generateId();
+        this.id = this.generateID();
         this.nome = nome;
         this.vegano = vegano;
     }
 
-    private generateId() : number {
+    public get getID() : number {
+        return this.id;
+    }
+
+    private generateID() : number {
         return Date.now();
     }
 }

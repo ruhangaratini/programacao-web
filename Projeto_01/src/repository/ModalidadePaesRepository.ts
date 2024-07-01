@@ -8,8 +8,12 @@ export class ModalidadePaesRepository {
         return this.modalidadePaes;
     }
 
-    public buscar(id:number) : ModalidadePaes|undefined {
+    public buscarID(id:number) : ModalidadePaes|undefined {
         return this.modalidadePaes.find((modalidade) => modalidade.getID == id);
+    }
+
+    public buscar(nome:string, vegano:boolean) : ModalidadePaes|undefined {
+        return this.modalidadePaes.find((modalidade) => modalidade.nome == nome && modalidade.vegano == vegano);
     }
 
     public inserir(modalidade:ModalidadePaes) : void {
@@ -18,7 +22,7 @@ export class ModalidadePaesRepository {
 
     public atualizar(id:number, nome:string, vegano:boolean) : boolean {
         const index:number = this.modalidadePaes.findIndex((modalidade) => modalidade.getID == id);
-        console.log(id, index);
+        
         if(index == -1) return false;
 
         this.modalidadePaes[index].nome = nome;

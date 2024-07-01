@@ -5,6 +5,6 @@ import { ModalidadePaesRepository } from "../../repository/ModalidadePaesReposit
 export function buscarModalidadePaes(id:number) : ModalidadePaes|undefined {
     const repository:ModalidadePaesRepository = DataBase.modalidadePaes;
     
-    return repository.buscar(id);
+    return repository.buscarID(id);
 
 }

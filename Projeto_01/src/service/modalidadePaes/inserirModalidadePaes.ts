@@ -2,10 +2,11 @@ import DataBase from "../../model/DataBase";
 import { ModalidadePaes } from "../../model/ModalidadePaes";
 import { ModalidadePaesRepository } from "../../repository/ModalidadePaesRepository";
 
-export function inserirModalidadePaes(modalidade: ModalidadePaes): boolean {
+export function inserirModalidadePaes(modalidade: ModalidadePaes): Error|void {
     const repository: ModalidadePaesRepository = DataBase.modalidadePaes;
 
-    repository.inserir(modalidade);
+    if(repository.buscar(modalidade.nome, modalidade.vegano)) 
+        return new Error('Modalidade já cadastrada');
 
-    return true;
+    repository.inserir(modalidade);
 }

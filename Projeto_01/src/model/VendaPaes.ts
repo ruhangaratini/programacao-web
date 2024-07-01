@@ -1,16 +1,20 @@
 import { ItemVenda } from "./ItemVenda";
 
 export class VendaPaes {
-    ID:number;
+    private id:number;
     cpfCliente:string;
-    valorTotal:string;
+    valorTotal:number;
     itensComprados: ItemVenda[];
 
-    constructor(cpfCliente:string, valorTotal:string, itensComprados:Array<ItemVenda>) {
-        this.ID = this.generateId();
+    constructor(cpfCliente:string, valorTotal:number, itensComprados:Array<ItemVenda>) {
+        this.id = this.generateId();
         this.cpfCliente = cpfCliente;
         this.valorTotal = valorTotal;
         this.itensComprados = itensComprados;
+    }
+    
+    public get getID() : number {
+        return this.id;
     }
 
     private generateId() : number {

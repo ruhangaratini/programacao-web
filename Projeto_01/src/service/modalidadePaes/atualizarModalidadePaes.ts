@@ -5,5 +5,4 @@ export function atualizarModalidadePaes(id: number, nome: string, vegano: boolea
     const repository: ModalidadePaesRepository = DataBase.modalidadePaes;
 
     return repository.atualizar(id, nome, vegano);
-
 }

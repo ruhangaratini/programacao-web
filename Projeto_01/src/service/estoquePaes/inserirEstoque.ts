@@ -1,14 +1,15 @@
 import DataBase from "../../model/DataBase";
 import { EstoquePaes } from "../../model/EstoquePaes";
 
-export function inserirEstoquePaes(estoquePaes: EstoquePaes) : boolean {
+export function inserirEstoquePaes(estoquePaes: EstoquePaes) : Error|void {
     const estoqueRepository = DataBase.estoquePaes;
     const modalidadeRepository = DataBase.modalidadePaes;
 
-    if(modalidadeRepository.buscar(estoquePaes.modalidadeID) !== undefined) {
-        estoqueRepository.inserir(estoquePaes);
-        return true;
-    }
+    if(modalidadeRepository.buscarID(estoquePaes.modalidadeID) === undefined)
+        return new Error('Modalidade não encontrada');
 
-    return false;
+    if(estoqueRepository.buscarModalidade(estoquePaes.modalidadeID) !== undefined)
+        return new Error('Estoque da modalidade já cadastrado');
+
+    estoqueRepository.inserir(estoquePaes);
 }

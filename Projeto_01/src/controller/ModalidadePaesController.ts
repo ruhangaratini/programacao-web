@@ -29,24 +29,26 @@ export class ModalidadePaesController {
             return;
         }
 
-        if(inserirModalidadePaes(new ModalidadePaes(nome, vegano)))
-            res.status(200).json({ message: 'Modalidade cadastrada com sucesso!'});
+        const response = inserirModalidadePaes(new ModalidadePaes(nome, vegano));
+
+        if(response instanceof Error)
+            res.status(400).json({ message: response.message });
         else
-            res.status(400).json({ message: 'Erro ao cadastrar modalidade, verifique os parâmetros da requisição'});
+            res.status(201).json({ message: 'Modalidade cadastrada com sucesso!'});
     }
 
     public atualizar(req:Request, res:Response) : void {
         const {id, nome, vegano} = req.body;
 
         if(!id || !nome || typeof vegano != 'boolean') {
-            res.status(400).json({ message: 'Modalidade não encontrada'});
+            res.status(400).json({ message: 'Erro ao atualizar modalidade, verifique os parâmetros da requisição'});
             return;
         }
 
         if(atualizarModalidadePaes(id, nome, vegano))
             res.status(200).json({ message: 'Modalidade atualizada com sucesso!'});
         else
-            res.status(400).json({ message: 'Erro ao atualizar modalidade, verifique os parâmetros da requisição'});
+            res.status(400).json({ message: 'Modalidade não encontrada'});
     }
 
     public deletar(req:Request, res:Response) : void {
@@ -58,9 +60,9 @@ export class ModalidadePaesController {
         }
 
         if(deletarModalidadePaes(id, nome, vegano))
-            res.status(200).json({ message: 'Modalidade deletada com sucesso!'});
+            res.status(202).json({ message: 'Modalidade deletada com sucesso!'});
         else
-            res.status(400).json({ message: 'Erro ao deletar modalidade, verifique os parâmetros da requisição'});
+            res.status(400).json({ message: 'Modalidade não encontrada'});
     }
 
 }

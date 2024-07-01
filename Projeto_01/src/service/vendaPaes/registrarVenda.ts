@@ -31,9 +31,12 @@ export function registrarVenda(cpf: string, itens: ItemVenda[]): Object|Error {
         estoqueRepository.removerItens(item.estoquePaesID, item.quantidade);
     }
 
-    vendasRepository.registrarVenda(new VendaPaes(cpf, valorTotal, itens));
+    const venda = new VendaPaes(cpf, valorTotal, itens);
+
+    vendasRepository.registrarVenda(venda);
 
     return {
+        idVenda: venda.getID,
         cpf: cpf,
         itens: itensResponse,
         valorTotal: valorTotal

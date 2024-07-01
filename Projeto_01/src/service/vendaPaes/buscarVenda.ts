@@ -15,6 +15,7 @@ export function buscarVenda(id: number): Object | Error {
         return new Error('Venda não encontrada');
 
     const response = {
+        idVenda: venda.getID,
         cpf: venda.cpfCliente,
         itens: new Array,
         total: venda.valorTotal

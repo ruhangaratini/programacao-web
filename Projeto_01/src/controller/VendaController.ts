@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { registrarVenda } from "../service/vendaPaes/registrarVenda";
-import { VendaPaes } from "../model/VendaPaes";
 import { ItemVenda } from "../model/ItemVenda";
 import { buscarVenda } from "../service/vendaPaes/buscarVenda";
 

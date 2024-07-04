@@ -8,8 +8,5 @@ export function inserirEstoquePaes(estoquePaes: EstoquePaes) : Error|void {
     if(modalidadeRepository.buscarID(estoquePaes.modalidadeID) === undefined)
         return new Error('Modalidade não encontrada');
 
-    if(estoqueRepository.buscarModalidade(estoquePaes.modalidadeID) !== undefined)
-        return new Error('Estoque da modalidade já cadastrado');
-
     estoqueRepository.inserir(estoquePaes);
 }

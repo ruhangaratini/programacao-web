@@ -1,8 +1,21 @@
-import { ProductRepository } from "./repository/ProductRepository";
+import express from "express";
+import { ProductController } from "./controller/ProductController";
 
-const repository:ProductRepository = new ProductRepository();
+const app = express();
+const PORT = process.env.PORT ?? 3000;
+app.use(express.json());
 
-repository.createTable();
-// repository.insertProduct('bolinho', 25);
-// repository.deleteProduct(1);
-// repository.updateProduct(2, 'suco', 5.99);
+
+function logInfo(){
+    console.log(`API em execução no URL: http:localhost:${PORT}`);
+}
+
+const productController = new ProductController();
+
+app.post("/api/product", productController.insertProduct);
+app.get("/api/product", productController.getProduct);
+app.put("/api/product", productController.updateProduct);
+
+app.listen(PORT, logInfo);
+
+

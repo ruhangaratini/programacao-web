@@ -1,8 +1,13 @@
 import { executarComandoSQL, tableExists } from "../database/mysql";
+import { Product } from "../model/Product";
 
-export class ProductRepository{
+export class ProductRepository {
 
-    async createTable() {
+    constructor() {
+        this.createTable();
+    }
+
+    private async createTable() {
         const query = `
         CREATE TABLE Vendas.Product (
             id INT AUTO_INCREMENT PRIMARY KEY, 
@@ -18,11 +23,11 @@ export class ProductRepository{
         }
     }
 
-    async insertProduct(name: string, price: number) {
+    async insertProduct(product:Product) {
         try {
             const resultado = await executarComandoSQL(
                 "INSERT INTO vendas.Product (name, price) VALUES (?, ?)",
-                [name, price],
+                [product.name, product.price],
             );
             console.log('Produto inserido com sucesso:', resultado);
         } catch (err) {
@@ -30,9 +35,19 @@ export class ProductRepository{
         }
     }
 
-    async updateProduct(id:number, name: string, price: number) {
+    async getProduct(id:number) {
         try {
-            const resultado = await executarComandoSQL('UPDATE vendas.Product SET name = ?, price = ? WHERE id = ?', [name, price, id]);
+            const resultado = await executarComandoSQL('SELECT * FROM vendas.Product WHERE id = ?', [id]);
+            console.log('Produto atualizado com sucesso: ', resultado);
+            return resultado;
+        } catch (err) {
+            console.error('Erro ao atualizar produto: ', err);
+        }
+    }
+
+    async updateProduct(id:number, product:Product) {
+        try {
+            const resultado = await executarComandoSQL('UPDATE vendas.Product SET name = ?, price = ? WHERE id = ?', [product.name, product.price, id]);
             console.log('Produto atualizado com sucesso: ', resultado);
         } catch (err) {
             console.error('Erro ao atualizar produto: ', err);

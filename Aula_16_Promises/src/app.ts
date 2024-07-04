@@ -22,4 +22,13 @@ async function test() {
     }
 }
 
+async function test_01() {
+    console.log("Antes da execução do delay....");
+    delay(2000).then(() => {
+        console.log("Fim da promise");
+    }).catch(() => {
+        console.log("Depois da execução do delay");
+    });
+}
+
 test();

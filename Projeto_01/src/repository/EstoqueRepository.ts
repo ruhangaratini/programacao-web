@@ -37,7 +37,12 @@ export class EstoqueRepository {
         if(index == -1)
             return new Error('Estoque não encontrado');
 
-        this.estoquePaes[index].quantidade -= quantidade;
+        const novaQtd = this.estoquePaes[index].quantidade - quantidade;
+
+        if(novaQtd < 0)
+            return new Error('Quantidade inválida, saldo: ' + novaQtd.toString());
+
+        this.estoquePaes[index].quantidade = novaQtd;
 
         return this.estoquePaes[index];
     }

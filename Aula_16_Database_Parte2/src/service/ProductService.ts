@@ -5,18 +5,18 @@ export class ProductService {
     private repository = new ProductRepository();
 
     public insertProduct(produto:Product) {
-        this.repository.insertProduct(produto);
+        return this.repository.insertProduct(produto);
     }
 
-    public getProduct(id:number) {
-
+    public async getProduct(id:number) {
+        return this.repository.getProduct(id);
     }
 
-    public updateProduct(id:number, produto:Product) {
-        this.repository.updateProduct(id, produto);
+    public updateProduct(produto:Product) {
+        return this.repository.updateProduct(produto);
     }
 
     public deleteProduct(id:number) {
-        this.repository.deleteProduct(id);
+        return this.repository.deleteProduct(id);
     }
 }

@@ -23,31 +23,35 @@ export class ProductRepository {
         }
     }
 
-    async insertProduct(product:Product) {
+    async insertProduct(product:Product) : Promise<Product|Error> {
         try {
             const resultado = await executarComandoSQL(
                 "INSERT INTO vendas.Product (name, price) VALUES (?, ?)",
                 [product.name, product.price],
             );
             console.log('Produto inserido com sucesso:', resultado);
+            return product;
         } catch (err) {
             console.error('Erro ao inserir o produto:', err);
+            return new Error('Erro ao registrar produto');
         }
     }
 
-    async getProduct(id:number) {
+    async getProduct(id:number) : Promise<Product|Error> {
         try {
             const resultado = await executarComandoSQL('SELECT * FROM vendas.Product WHERE id = ?', [id]);
             console.log('Produto atualizado com sucesso: ', resultado);
+            
             return resultado;
         } catch (err) {
             console.error('Erro ao atualizar produto: ', err);
+            return new Error('Erro ao consultar produto');
         }
     }
 
-    async updateProduct(id:number, product:Product) {
+    async updateProduct(product:Product) {
         try {
-            const resultado = await executarComandoSQL('UPDATE vendas.Product SET name = ?, price = ? WHERE id = ?', [product.name, product.price, id]);
+            const resultado = await executarComandoSQL('UPDATE vendas.Product SET name = ?, price = ? WHERE id = ?', [product.name, product.price, product.id]);
             console.log('Produto atualizado com sucesso: ', resultado);
         } catch (err) {
             console.error('Erro ao atualizar produto: ', err);

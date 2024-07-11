@@ -13,8 +13,9 @@ function logInfo(){
 const productController = new ProductController();
 
 app.post("/api/product", productController.insertProduct);
-app.get("/api/product", productController.getProduct);
+app.get("/api/product/:id", productController.getProduct);
 app.put("/api/product", productController.updateProduct);
+app.delete("/api/product", productController.deleteProduct);
 
 app.listen(PORT, logInfo);
 

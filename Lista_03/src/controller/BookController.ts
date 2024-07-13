@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Book } from "../model/BookModel";
 import { insertBookService } from "../service/Books/InsertBookService";
 import { ErrorResponse } from "../model/ErrorResponse";
+import { listBooks } from "../service/Books/ListBooksService";
 
 export class BookController {
 
@@ -23,8 +24,15 @@ export class BookController {
         res.status(201).json({ id: insertID, book: book });
     }
 
-    public listBooks(req: Request, res: Response) {
+    public async listBooks(req: Request, res: Response) {
+        const books: any[] | ErrorResponse = await listBooks();
 
+        if(books instanceof ErrorResponse) {
+            res.status(books.code).json(books.message);
+            return;
+        }
+
+        res.status(200).json(books);
     }
 
     public getBookByID(req: Request, res: Response) {

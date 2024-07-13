@@ -48,7 +48,19 @@ export class BookRepository {
 
             return response;
         } catch (e) {
-            return new Error('Ocorreu um erro ao cadastrar livro');
+            return new Error('Ocorreu um erro ao buscar livro por ISBN');
+        }
+    }
+
+    public async listBooks(): Promise<any[] | Error> {
+        try {
+            const response = await DbQuery(
+                `SELECT * FROM library.books`,
+            );
+
+            return response;
+        } catch (e) {
+            return new Error('Ocorreu um erro ao listar livros');
         }
     }
 

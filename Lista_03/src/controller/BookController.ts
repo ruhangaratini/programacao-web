@@ -4,6 +4,7 @@ import { insertBookService } from "../service/Books/InsertBookService";
 import { ErrorResponse } from "../model/ErrorResponse";
 import { listBooks } from "../service/Books/ListBooksService";
 import { getBookByID } from "../service/Books/getBookByIdService";
+import { updateBookByID } from "../service/Books/updateBookService";
 
 export class BookController {
 
@@ -54,11 +55,36 @@ export class BookController {
         res.status(200).json(book);
     }
 
-    public updateBook(req: Request, res: Response) {
+    public async updateBook(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        if(Number.isNaN(id)) {
+            res.status(400).json({ message: 'ID inválido' });
+            return;
+        }
 
+        const book = Book.fromJson(req.body);
+        if (book instanceof Error) {
+            res.status(400).json({ message: book.message });
+            return;
+        }
+
+        book.id = id;
+
+        const response = await updateBookByID(book);
+
+        if(response instanceof ErrorResponse) {
+            res.status(response.code).json(response.message);
+            return;
+        }
+
+        if(response) {
+            res.status(202).json(book);
+        } else {
+            res.status(404).json({ message: 'Livro não encontrado' });
+        }
     }
 
-    public deleteBook(req: Request, res: Response) {
+    public async deleteBook(req: Request, res: Response) {
 
     }
 

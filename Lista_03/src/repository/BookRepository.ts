@@ -76,7 +76,27 @@ export class BookRepository {
 
             return;
         } catch (e) {
-            return new Error('Ocorreu um erro ao listar livros');
+            return new Error('Ocorreu um erro ao buscar livro');
+        }
+    }
+
+    public async update(book: Book) : Promise<Error|boolean> {
+        try {
+            const response = await DbQuery(
+                `UPDATE library.books SET 
+                    title = ?,
+                    author = ?,
+                    publishedDate = ?,
+                    isbn = ?,
+                    pages = ?,
+                    lang = ?,
+                    publisher = ? 
+                WHERE id = ?`, [book.title, book.author,book.publishedDate.toISOString().split('T')[0], book.isbn, book.pages, book.language, book.publisher, book.id!]
+            );
+
+            return response.affectedRows == 1;
+        } catch (e) {
+            return new Error('Ocorreu um erro ao atualizar livro');
         }
     }
 

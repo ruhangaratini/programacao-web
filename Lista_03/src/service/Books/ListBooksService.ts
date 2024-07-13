@@ -1,4 +1,3 @@
-import { Book } from "../../model/BookModel";
 import { ErrorResponse } from "../../model/ErrorResponse";
 import { BookRepository } from "../../repository/BookRepository";
 

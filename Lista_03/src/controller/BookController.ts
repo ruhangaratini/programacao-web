@@ -3,6 +3,7 @@ import { Book } from "../model/BookModel";
 import { insertBookService } from "../service/Books/InsertBookService";
 import { ErrorResponse } from "../model/ErrorResponse";
 import { listBooks } from "../service/Books/ListBooksService";
+import { getBookByID } from "../service/Books/getBookByIdService";
 
 export class BookController {
 
@@ -35,8 +36,22 @@ export class BookController {
         res.status(200).json(books);
     }
 
-    public getBookByID(req: Request, res: Response) {
+    public async getBookByID(req: Request, res: Response) {
+        const id = parseInt(req.params.id, 10);
 
+        if(Number.isNaN(id)) {
+            res.status(400).json({ message: 'ID inválido' });
+            return;
+        }
+
+        const book = await getBookByID(id);
+
+        if(book instanceof ErrorResponse) {
+            res.status(book.code).json(book.message);
+            return;
+        }
+
+        res.status(200).json(book);
     }
 
     public updateBook(req: Request, res: Response) {

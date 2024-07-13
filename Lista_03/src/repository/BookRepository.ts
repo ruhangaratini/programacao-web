@@ -64,4 +64,20 @@ export class BookRepository {
         }
     }
 
+    public async getByID(id: number): Promise<Book | Error | undefined> {
+        try {
+            const response = await DbQuery(
+                `SELECT * FROM library.books WHERE id = ?`, [id],
+            );
+
+            if(response.length == 1) {
+                return Book.fromJson(response[0]);
+            }
+
+            return;
+        } catch (e) {
+            return new Error('Ocorreu um erro ao listar livros');
+        }
+    }
+
 }

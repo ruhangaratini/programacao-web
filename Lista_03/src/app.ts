@@ -12,7 +12,7 @@ const bookController = new BookController();
 app.post('/books', bookController.createBook);
 app.get('/books', bookController.listBooks);
 app.get('/books/:id', bookController.getBookByID);
-app.put('/books', bookController.updateBook);
-app.delete('/books', bookController.deleteBook);
+app.put('/books/:id', bookController.updateBook);
+app.delete('/books/:id', bookController.deleteBook);
 
 app.listen(PORT, () => console.log("API online na porta: " + PORT));

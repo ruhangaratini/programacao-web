@@ -100,4 +100,16 @@ export class BookRepository {
         }
     }
 
+    public async delete(id:number) : Promise<boolean|Error> {
+        try {
+            const response = await DbQuery(
+                `DELETE FROM library.books WHERE id = ?`, [id]
+            );
+
+            return response.affectedRows == 1;
+        } catch (e) {
+            return new Error('Ocorreu um erro ao deletar livro');
+        }
+    }
+
 }

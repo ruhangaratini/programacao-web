@@ -5,6 +5,7 @@ import { ErrorResponse } from "../model/ErrorResponse";
 import { listBooks } from "../service/Books/ListBooksService";
 import { getBookByID } from "../service/Books/getBookByIdService";
 import { updateBookByID } from "../service/Books/updateBookService";
+import { deleteBookByID } from "../service/Books/deleteBookByIdService";
 
 export class BookController {
 
@@ -78,14 +79,31 @@ export class BookController {
         }
 
         if(response) {
-            res.status(202).json(book);
+            res.status(201).json(book);
         } else {
             res.status(404).json({ message: 'Livro não encontrado' });
         }
     }
 
     public async deleteBook(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        if(Number.isNaN(id)) {
+            res.status(400).json({ message: 'ID inválido' });
+            return;
+        }
 
+        const response = await deleteBookByID(id);
+
+        if(response instanceof ErrorResponse) {
+            res.status(response.code).json(response.message);
+            return;
+        }
+
+        if(response) {
+            res.status(202).json({ message: 'Book deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Livro não encontrado' });
+        }
     }
 
 }

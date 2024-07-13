@@ -5,7 +5,7 @@ export class BookRepository {
     private async createTable() {
         try {
             await DbQuery(`
-                CREATE TABLE library.books (
+                CREATE TABLE IF NOT EXISTS library.books (
                     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
                     title VARCHAR(255),
                     author VARCHAR(255),
@@ -23,8 +23,7 @@ export class BookRepository {
     }
 
     constructor() {
-        console.log('CRIA TABELA');
-        // this.createTable();
+        this.createTable();
     }
 
     public async insert(book: Book) : Promise<number|Error> {

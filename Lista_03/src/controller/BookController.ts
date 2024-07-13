@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Book } from "../model/BookModel";
 import { insertBookService } from "../service/Books/InsertBookService";
+import { ErrorResponse } from "../model/ErrorResponse";
 
 export class BookController {
 
@@ -12,10 +13,10 @@ export class BookController {
             return;
         }
 
-        const insertID: number | Error = await insertBookService(book);
+        const insertID: number | ErrorResponse = await insertBookService(book);
 
-        if(insertID instanceof Error) {
-            res.status(500).json({ message: insertID.message });
+        if(insertID instanceof ErrorResponse) {
+            res.status(insertID.code).json(insertID.message);
             return;
         }
 

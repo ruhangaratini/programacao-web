@@ -10,7 +10,7 @@ export class BookRepository {
                     title VARCHAR(255),
                     author VARCHAR(255),
                     publishedDate DATE,
-                    isbn VARCHAR(30),
+                    isbn VARCHAR(30) UNIQUE,
                     pages INT,
                     lang VARCHAR(255),
                     publisher VARCHAR(255),
@@ -26,14 +26,27 @@ export class BookRepository {
         this.createTable();
     }
 
-    public async insert(book: Book) : Promise<number|Error> {
+    public async insert(book: Book): Promise<number | Error> {
         try {
             const response = await DbQuery(
-                `INSERT INTO library.books (title, author, publishedDate, isbn, pages, lang, publisher) VALUES (?, ?, ?, ?, ?, ?, ?)`, 
+                `INSERT INTO library.books (title, author, publishedDate, isbn, pages, lang, publisher) VALUES (?, ?, ?, ?, ?, ?, ?)`,
                 [book.title, book.author, book.publishedDate.toISOString().split('T')[0], book.isbn, book.pages, book.language, book.publisher]
             );
 
             return response.insertId;
+        } catch (e) {
+            return new Error('Ocorreu um erro ao cadastrar livro');
+        }
+    }
+
+    public async getByISBN(isbn: string): Promise<any[] | Error> {
+        try {
+            const response = await DbQuery(
+                `SELECT title FROM library.books WHERE isbn = ?`,
+                [isbn]
+            );
+
+            return response;
         } catch (e) {
             return new Error('Ocorreu um erro ao cadastrar livro');
         }

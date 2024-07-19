@@ -21,6 +21,8 @@ export class Book {
 
     static fromJson(json: any) : Book|Error {
         try {
+            if(!json.title || !json.author || !json.publishedDate || !json.isbn || !json.pages || !json.language || !json.publisher) throw new Error();
+
             return new Book(
                 json.title as string,
                 json.author as string,

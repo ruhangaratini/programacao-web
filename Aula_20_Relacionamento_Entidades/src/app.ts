@@ -1,6 +1,6 @@
 import { cadastrarTipoConta, updateTipoConta, deletaTipoConta, getTipoConta, getTiposConta } from "./controller/TipoContaController";
 import { cadastrarConta, updateConta, deletaConta, getConta, getContas } from "./controller/ContaController";
-import { criarCliente } from "./controller/ClienteController";
+import { cadastrarCliente, updateCliente, deletaCliente, getCliente, getClientes } from "./controller/ClienteController";
 
 import express from "express"
 
@@ -21,7 +21,11 @@ app.delete("/api/tipoConta",deletaTipoConta);
 app.get("/api/tipoConta",getTipoConta);
 app.get("/api/tipoConta/all",getTiposConta);
 
-app.post("/api/cliente", criarCliente);
+app.post("/api/cliente", cadastrarCliente);
+app.put("/api/cliente", updateCliente);
+app.delete("/api/cliente", deletaCliente);
+app.get("/api/cliente", getCliente);
+app.get("/api/cliente/all", getClientes);
 
 
 app.listen(PORT, ()=>{console.log("API rodando na PORTA 3040")})

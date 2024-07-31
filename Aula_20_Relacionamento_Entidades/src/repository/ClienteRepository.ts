@@ -19,13 +19,27 @@ export class ClienteRepository {
     }
 
     public async inserir(cliente: Cliente): Promise<Cliente> {
-        await executarComandoSQL('INSERT INTO clientes (nome, cpf, data_nascimento) VALUES (?, ?, ?)', [cliente.nome, cliente.cpf, cliente.data_nascimento]);
+        const response = await executarComandoSQL('INSERT INTO clientes (nome, cpf, data_nascimento) VALUES (?, ?, ?)', [cliente.nome, cliente.cpf, cliente.data_nascimento]);
+
+        cliente.id = response.insertId;
+
+        return cliente;
+    }
+
+    public async deleta(cliente: Cliente): Promise<Cliente> {
+        const response = await executarComandoSQL(`DELETE FROM clientes WHERE id = ?`, [cliente.id]);
+
+        if (response.affectedRows == 0)
+            throw new Error('Nenhuma conta encontrada');
 
         return cliente;
     }
 
     public async buscarPorID(id: number): Promise<Cliente> {
         const response = await executarComandoSQL('SELECT * FROM clientes WHERE id = ?', [id]);
+
+        if(response.length == 0)
+            throw new Error('Cliente não encontrado');
 
         return new Cliente(response[0].id, response[0].nome, response[0].cpf, new Date(response[0].data_nascimento));
     }
@@ -44,5 +58,14 @@ export class ClienteRepository {
             throw new Error('Cliente não encontrado');
 
         return cliente;
+    }
+
+    public async buscarPorCPF(cpf: string): Promise<Cliente> {
+        const response = await executarComandoSQL('SELECT * FROM clientes WHERE cpf = ?', [cpf]);
+
+        if(response.length == 0)
+            throw new Error('Cliente não encontrado');
+
+        return new Cliente(response[0].id, response[0].nome, response[0].cpf, new Date(response[0].data_nascimento));
     }
 }

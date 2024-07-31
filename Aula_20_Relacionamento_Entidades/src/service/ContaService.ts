@@ -1,8 +1,10 @@
+import { Cliente } from "../model/Cliente";
 import { Conta } from "../model/Conta";
 import { TipoConta } from "../model/TipoConta";
 import { ClienteRepository } from "../repository/ClienteRepository";
 import { ContaRepository } from "../repository/ContaRepository";
 import { TipoContaRepository } from "../repository/TipoContaRepository";
+import { daysDiff } from "../utils/DaysDiffUtils";
 
 export class ContaService {
     private clienteRepository = new ClienteRepository();
@@ -10,14 +12,32 @@ export class ContaService {
     private repository = new ContaRepository();
 
     async criaConta(data: any) {
-        const conta = new Conta(undefined, undefined, undefined, data.saldo, data.tipoConta);
+        const cliente : Cliente = await this.clienteRepository.buscarPorCPF(data.cpf); 
+        const conta : Conta = new Conta(undefined, cliente.id, undefined, data.saldo, data.tipoConta);
+        const tipoConta : TipoConta = await this.tipoContaRepository.buscarPorCodigo(conta.tipoConta);
 
-        if(!(await this.tipoContaRepository.codigoExistente(conta.tipoConta))) {
+        if(!tipoConta) {
             throw new Error(`Tipo de conta ${conta.tipoConta} não encontrado`);
         }
 
-        if(!(await this.clienteRepository.buscarPorID(conta.idCliente))) {
-            throw new Error(`Cliente ${conta.idCliente} não encontrado`);
+        if(daysDiff(new Date(), cliente.data_nascimento!) < 18 * 365 && tipoConta.descricao == 'Corrente') {
+            throw new Error('Cliente menor de 18 anos');
+        }
+
+        if(tipoConta.descricao == 'Poupança' && conta.saldo < 100) {
+            throw new Error('Saldo insuficiente, mínimo: R$100,00');
+        }
+
+        const clienteContas = await this.repository.buscarPorCliente(cliente.id);
+
+        console.log(cliente);
+        console.log(tipoConta);
+        console.log(clienteContas);
+
+        for(const clienteConta of clienteContas) {
+            if(clienteConta.codigo_tipo_conta == tipoConta.codigoTipoConta) {
+                throw new Error(`Cliente já possui uma conta ${tipoConta.descricao}`);
+            }
         }
 
         return await this.repository.inserir(conta);

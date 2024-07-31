@@ -31,12 +31,12 @@ export async function updateCliente(req: Request, res: Response) {
 
 export async function deletaCliente(req: Request, res: Response) {
     try {
-        // const novoCliente = await service.criarCliente(req.body);
+        const cliente = await service.deletaCliente(req.body);
 
-        // res.status(201).json({
-        //     mensagem: 'Cliente atualizado com sucesso',
-        //     cliente: novoCliente
-        // });
+        res.status(201).json({
+            mensagem: 'Cliente deletado com sucesso',
+            cliente: cliente
+        });
     } catch (error: any) {
         res.status(400).json({ message: error.message });
     }

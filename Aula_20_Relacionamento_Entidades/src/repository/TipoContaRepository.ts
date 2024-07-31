@@ -38,32 +38,32 @@ export class TipoContaRepository {
         return response.length > 0;
     }
 
-    async buscarPorID(id: number) : Promise<TipoConta> {
+    async buscarPorID(id: number): Promise<TipoConta> {
         const response = await executarComandoSQL(`SELECT * FROM tipos_conta WHERE id = ?`, [id]);
 
         return new TipoConta(response[0].id, response[0].descricao, response[0].codigo_tipo_conta);
     }
 
-    async deletar(tipoConta: TipoConta) : Promise<TipoConta> {
+    async deletar(tipoConta: TipoConta): Promise<TipoConta> {
         const response = await executarComandoSQL('DELETE FROM tipos_conta WHERE id = ?', [tipoConta.id]);
 
-        if(response.affectedRows == 0) {
+        if (response.affectedRows == 0) {
             throw new Error('tipo de conta não encontrado');
         }
 
         return tipoConta;
     }
 
-    async buscar(condicao: string, valores: any[]) : Promise<TipoConta> {
+    async buscar(condicao: string, valores: any[]): Promise<TipoConta> {
         const response = await executarComandoSQL(`SELECT * FROM tipos_conta WHERE ${condicao}`, valores);
 
-        if(response.length == 0) 
+        if (response.length == 0)
             throw new Error('Tipo conta não encontrado');
 
         return new TipoConta(response[0].id, response[0].descricao, response[0].codigo_tipo_conta);
     }
 
-    async buscarTodos() : Promise<any[]> {
+    async buscarTodos(): Promise<any[]> {
         return await executarComandoSQL('SELECT * FROM tipos_conta', []);
     }
 
@@ -72,5 +72,14 @@ export class TipoContaRepository {
             [codigo]);
 
         return response.length > 0;
+    }
+
+    async buscarPorCodigo(codigo: number): Promise<TipoConta> {
+        const response = await executarComandoSQL(`SELECT * FROM tipos_conta WHERE codigo_tipo_conta = ?`, [codigo]);
+
+        if(response.length == 0)
+            throw new Error('Tipo de conta não encontrado');
+
+        return new TipoConta(response[0].id, response[0].descricao, response[0].codigo_tipo_conta);
     }
 }

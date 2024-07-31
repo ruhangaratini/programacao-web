@@ -29,8 +29,8 @@ export class ContaRepository {
     }
 
     async inserir(conta: Conta): Promise<Conta> {
-        const response = await executarComandoSQL('INSERT INTO contas (numero_conta, saldo, codigo_tipo_conta) VALUES (?, ?, ?)',
-            [conta.numeroConta, conta.saldo, conta.tipoConta]);
+        const response = await executarComandoSQL('INSERT INTO contas (numero_conta, id_cliente, saldo, codigo_tipo_conta) VALUES (?, ?, ?, ?)',
+            [conta.numeroConta, conta.idCliente, conta.saldo, conta.tipoConta]);
 
         conta.id = response.insertId;
 
@@ -68,6 +68,10 @@ export class ContaRepository {
 
     async atualizaTipoConta(novo: number, antigo: number) {
         await executarComandoSQL('UPDATE contas SET codigo_tipo_conta = ? WHERE codigo_tipo_conta = ?', [novo, antigo]);
+    }
+
+    async buscarPorCliente(id: number) : Promise<any[]> {
+        return await executarComandoSQL('SELECT * FROM contas WHERE id_cliente = ?', [id]);
     }
 
 }

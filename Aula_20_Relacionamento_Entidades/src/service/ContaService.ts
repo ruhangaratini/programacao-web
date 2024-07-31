@@ -29,11 +29,7 @@ export class ContaService {
         }
 
         const clienteContas = await this.repository.buscarPorCliente(cliente.id);
-
-        console.log(cliente);
-        console.log(tipoConta);
-        console.log(clienteContas);
-
+        
         for(const clienteConta of clienteContas) {
             if(clienteConta.codigo_tipo_conta == tipoConta.codigoTipoConta) {
                 throw new Error(`Cliente já possui uma conta ${tipoConta.descricao}`);

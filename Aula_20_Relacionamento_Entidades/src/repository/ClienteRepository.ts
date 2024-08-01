@@ -38,7 +38,7 @@ export class ClienteRepository {
     public async buscarPorID(id: number): Promise<Cliente> {
         const response = await executarComandoSQL('SELECT * FROM clientes WHERE id = ?', [id]);
 
-        if(response.length == 0)
+        if (response.length == 0)
             throw new Error('Cliente não encontrado');
 
         return new Cliente(response[0].id, response[0].nome, response[0].cpf, new Date(response[0].data_nascimento));
@@ -54,16 +54,23 @@ export class ClienteRepository {
         const response = await executarComandoSQL('UPDATE clientes SET nome = ?, cpf = ?, data_nascimento = ? WHERE id = ?',
             [cliente.nome, cliente.cpf, cliente.data_nascimento, cliente.id]);
 
-        if(response.affectedRows == 0)
+        if (response.affectedRows == 0)
             throw new Error('Cliente não encontrado');
 
         return cliente;
     }
 
+
+    public async checaCPF(cpf: string): Promise<boolean> {
+        const response = await executarComandoSQL('SELECT * FROM clientes WHERE cpf = ?', [cpf]);
+
+        return response.length > 0;
+    }
+
     public async buscarPorCPF(cpf: string): Promise<Cliente> {
         const response = await executarComandoSQL('SELECT * FROM clientes WHERE cpf = ?', [cpf]);
 
-        if(response.length == 0)
+        if (response.length == 0)
             throw new Error('Cliente não encontrado');
 
         return new Cliente(response[0].id, response[0].nome, response[0].cpf, new Date(response[0].data_nascimento));

@@ -9,6 +9,10 @@ export class ClienteService {
     public async criarCliente(data: any) : Promise<Cliente> {
         const cliente: Cliente = new Cliente(undefined, data.nome, data.cpf, new Date(data.data_nascimento));
 
+        if(await this.repository.checaCPF(cliente.cpf)) {
+            throw new Error('CPF já cadastrado');
+        }
+
         return await this.repository.inserir(cliente);
     } 
 

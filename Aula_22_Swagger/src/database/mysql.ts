@@ -4,8 +4,8 @@ const dbConfig = {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: 'mysql',
-    database: 'estoque'
+    password: 'ifsp',
+    database: ''
 };
 
 const mysqlConnection: Connection = mysql.createConnection(dbConfig);

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { Route, Tags, Controller, Post, Body, Res, TsoaResponse } from "tsoa";
+import { Route, Tags, Controller, Post, Put, Delete, Body, Res, TsoaResponse, Get, Query } from "tsoa";
 
 import { ProductService } from "../service/ProductService";
 import { ProductRequestDto } from "../model/dto/ProductRequestDto";
 import { BasicResponseDto } from "../model/dto/BasicResponseDto";
+import { ProductEntity } from "../model/entity/ProductEntity";
 
 @Route('product')
 @Tags('Product')
@@ -24,59 +25,58 @@ export class ProductController extends Controller {
         }
     };
 
-    async atualizarProduto(req: Request, res: Response) {
+    @Put()
+    async atualizarProduto(
+        @Body() product: ProductEntity,
+        @Res() fail: TsoaResponse<400, BasicResponseDto>,
+        @Res() success: TsoaResponse<201, BasicResponseDto>
+    ): Promise<void> {
         try {
-            const produto = await this.productService.atualizarProduto(req.body);
-            res.status(200).json(
-                {
-                    mensagem: "Produto atualizado com sucesso!",
-                    produto: produto
-                }
-            );
+            const produto = await this.productService.atualizarProduto(product);
+            return success(201, new BasicResponseDto('Produto atualizado com sucesso!', produto));
         } catch (error: any) {
-            res.status(400).json({ message: error.message });
+            fail(400, new BasicResponseDto(error.message, undefined));
         }
     };
 
-    async deletarProduto(req: Request, res: Response) {
+    @Delete()
+    async deletarProduto(
+        @Body() product: ProductEntity,
+        @Res() fail: TsoaResponse<400, BasicResponseDto>,
+        @Res() success: TsoaResponse<202, BasicResponseDto>
+    ) {
         try {
-            const produto = await this.productService.deletarProduto(req.body);
-            res.status(200).json(
-                {
-                    mensagem: "Produto deletado com sucesso!",
-                    produto: produto
-                }
-            );
+            const produto = await this.productService.deletarProduto(product);
+            return success(202, new BasicResponseDto('Produto deletado com sucesso', produto));
         } catch (error: any) {
-            res.status(400).json({ message: error.message });
+            return fail(400, new BasicResponseDto(error.message, undefined));
         }
     };
 
-    async filtrarProduto(req: Request, res: Response) {
+    @Get()
+    async filtrarProduto(
+        @Query() id: String,
+        @Res() fail: TsoaResponse<400, BasicResponseDto>,
+        @Res() success: TsoaResponse<200, BasicResponseDto>
+    ) {
         try {
-            const produto = await this.productService.filtrarProduto(req.query.id);
-            res.status(200).json(
-                {
-                    mensagem: "Produto encontrado com sucesso!",
-                    produto: produto
-                }
-            );
+            const produto = await this.productService.filtrarProduto(id);
+            return success(200, new BasicResponseDto('Produto encontrado com sucesso!', produto));
         } catch (error: any) {
-            res.status(400).json({ message: error.message });
+            return fail(400, new BasicResponseDto(error.message, undefined));
         }
     };
 
-    async listarTodosProduto(req: Request, res: Response) {
+    @Get('/all')
+    async listarTodosProduto(
+        @Res() fail: TsoaResponse<400, BasicResponseDto>,
+        @Res() success: TsoaResponse<200, BasicResponseDto>
+    ) {
         try {
             const produtos = await this.productService.listarTodosProdutos();
-            res.status(200).json(
-                {
-                    mensagem: "Produtos listados com sucesso!",
-                    produtos: produtos
-                }
-            );
+            return success(200, new BasicResponseDto('Produtos listados com sucesso!', produtos));
         } catch (error: any) {
-            res.status(400).json({ message: error.message });
+            return fail(400, new BasicResponseDto(error.message, undefined));
         }
     };
 }
